@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sleep Metrics Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 60%;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h2 {
+            text-align: center;
+            color: #4682b4;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        input[type="number"], select {
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background-color: #4682b4;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #5a9bd5;
+        }
+        .results {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .results p {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Predict Sleep Metrics</h2>
+        <form action="/predict" method="post">
+            <label for="Age">Age:</label>
+            <input type="number" id="Age" name="Age" value="">
+
+            <label for="Gender">Gender:</label>
+            <select id="Gender" name="Gender">
+                <option value="0">Male</option>
+                <option value="1">Female</option>
+            </select>
+
+            <label for="Sleep duration">Sleep duration (hours):</label>
+            <input type="number" step="0.1" id="Sleep duration" name="Sleep duration" value="">
+
+            <label for="Awakenings">Awakenings:</label>
+            <input type="number" step="0.1" id="Awakenings" name="Awakenings" value="">
+
+            <label for="Exercise frequency">Exercise frequency (times per week):</label>
+            <input type="number" step="0.1" id="Exercise frequency" name="Exercise frequency" value="">
+
+            <label for="Caffeine consumption">Caffeine consumption (cups per day):</label>
+            <input type="number" step="0.1" id="Caffeine consumption" name="Caffeine consumption" value="">
+
+            <label for="Alcohol consumption">Alcohol consumption (drinks per day):</label>
+            <input type="number" step="0.1" id="Alcohol consumption" name="Alcohol consumption" value="">
+
+            <label for="Smoking status">Smoking status:</label>
+            <select id="Smoking status" name="Smoking status">
+                <option value="No">Non-smoker</option>
+                <option value="Yes">Smoker</option>
+            </select>
+
+            <input type="submit" value="Predict">
+        </form>
+
+        {% if prediction %}
+            <div id="results" class="results">
+                <h2>Prediction Results</h2>
+                <p>Sleep efficiency: {{ prediction['Sleep efficiency'] }}</p>
+                <p>REM sleep percentage: {{ prediction['REM sleep percentage'] }}</p>
+                <p>Deep sleep percentage: {{ prediction['Deep sleep percentage'] }}</p>
+                <p>Light sleep percentage: {{ prediction['Light sleep percentage'] }}</p>
+            </div>
+            <script>
+                // Scroll to the results section if it exists
+                document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+            </script>
+        {% endif %}
+    </div>
+</body>
+</html>
